@@ -82,7 +82,6 @@ void loop() {
     //Serial.print(potValue[i]); Serial.print(",");
     volume[i] = map(potValue[i], 0, 1023, -10, 10);
   }
-  Serial.println(" ");
 
   //POTENTIOMETER
   
@@ -113,31 +112,46 @@ void loop() {
   //CAPACITIVE TOUCH
 
   //NEOPIXEL
-/*
+
   for (int i = 0; i < 4; i++) {
     led_val[i] = map(potValue[i], 0, 1023, 0, 8);
   }
 
-  for (int i = 0; i < led_val[0]; i++) {
-    strip0.show(); //this sends the updated pixel color to the hardware
-    strip0.setPixelColor(i, strip0.Color(255, 0, 0)); //red
-    strip0.show(); //this sends the updated pixel color to the hardware
+  //clears all the pixels
+  for (int i = 0; i < 8; i++) {
+    strip0.setPixelColor(i, strip0.Color(0, 0, 0)); //white
+    strip1.setPixelColor(i, strip1.Color(0, 0, 0)); //white
+    strip2.setPixelColor(i, strip2.Color(0, 0, 0)); //white
+    strip3.setPixelColor(i, strip3.Color(0, 0, 0)); //white
   }
-  for (int i = 0; i < led_val[1]; i++) {
-    strip1.show(); //this sends the updated pixel color to the hardware
-    strip1.setPixelColor(i, strip1.Color(255, 255, 0)); //yellow
-    strip1.show(); //this sends the updated pixel color to the hardware
+
+  if (playing[0]) {
+    for (int i = 0; i < led_val[0]; i++) {
+      strip0.setPixelColor(i, strip0.Color(255, 0, 0)); //red
+      strip0.show(); //this sends the updated pixel color to the hardware
+    }
   }
-  for (int i = 0; i < led_val[2]; i++) {
-    strip2.show(); //this sends the updated pixel color to the hardware
-    strip2.setPixelColor(i, strip2.Color(0, 150, 0)); //green
-    strip2.show(); //this sends the updated pixel color to the hardware
+  
+  if (playing[1]) {
+    for (int i = 0; i < led_val[1]; i++) {
+      strip1.setPixelColor(i, strip1.Color(255, 255, 0)); //yellow
+      strip1.show(); //this sends the updated pixel color to the hardware
+    }
   }
-  for (int i = 0; i < led_val[3]; i++) {
-    strip3.show(); //this sends the updated pixel color to the hardware
-    strip3.setPixelColor(i, strip3.Color(0, 0, 255)); //blue
-    strip3.show(); //this sends the updated pixel color to the hardware
-  }*/
+  
+  if (playing[2]) {
+    for (int i = 0; i < led_val[2]; i++) {
+      strip2.setPixelColor(i, strip2.Color(0, 150, 0)); //green
+      strip2.show(); //this sends the updated pixel color to the hardware
+    }
+  }
+  
+  if (playing[3]) {
+    for (int i = 0; i < led_val[3]; i++) {
+      strip3.setPixelColor(i, strip3.Color(0, 0, 255)); //blue
+      strip3.show(); //this sends the updated pixel color to the hardware
+    }
+  }
 
   //NEOPIXEL
 
