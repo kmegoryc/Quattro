@@ -17,9 +17,9 @@ const int potPin0 = A0;
 const int potPin1 = A1;
 const int potPin2 = A2;
 const int potPin3 = A3;
-int potValue[4];
-float volume[4];
-int led_val[4];
+int potValue[4]; //slider potentiometer value
+float volume[4]; //potentiometer value mapped to volume
+int led_val[4]; //potentiometer value mapped to led value
 
 //capacitive touch shield object
 Adafruit_MPR121 cap = Adafruit_MPR121();
@@ -82,6 +82,8 @@ void loop() {
     //Serial.print(potValue[i]); Serial.print(",");
     volume[i] = map(potValue[i], 0, 1023, -10, 10);
   }
+  //Serial.println(" ");
+  //delay(100);
 
   //POTENTIOMETER
   
@@ -113,43 +115,84 @@ void loop() {
 
   //NEOPIXEL
 
+  //map a potentiometer value to a scale on the neopixel strip
   for (int i = 0; i < 4; i++) {
     led_val[i] = map(potValue[i], 0, 1023, 0, 8);
   }
 
-  //clears all the pixels
-  for (int i = 0; i < 8; i++) {
-    strip0.setPixelColor(i, strip0.Color(0, 0, 0)); //white
-    strip1.setPixelColor(i, strip1.Color(0, 0, 0)); //white
-    strip2.setPixelColor(i, strip2.Color(0, 0, 0)); //white
-    strip3.setPixelColor(i, strip3.Color(0, 0, 0)); //white
-  }
-
+  //RED 0
   if (playing[0]) {
-    for (int i = 0; i < led_val[0]; i++) {
+    for (int i = N_LEDS; i > led_val[0]; i--) {
+      strip0.setPixelColor(i, strip0.Color(0, 0, 0)); //white
+      strip0.show();
+    }
+    for (int i = 0; i <= led_val[0]; i++) {
       strip0.setPixelColor(i, strip0.Color(255, 0, 0)); //red
       strip0.show(); //this sends the updated pixel color to the hardware
     }
   }
-  
+
+  if (!playing[0]) {
+    for (int i = 0; i < N_LEDS; i++) {
+      strip0.setPixelColor(i, strip0.Color(0, 0, 0)); //white
+      strip0.show();
+    }
+  }
+
+  //YELLOW 1
   if (playing[1]) {
-    for (int i = 0; i < led_val[1]; i++) {
+    for (int i = N_LEDS; i > led_val[1]; i--) {
+      strip1.setPixelColor(i, strip1.Color(0, 0, 0)); //white
+      strip1.show();
+    }
+    for (int i = 0; i <= led_val[1]; i++) {
       strip1.setPixelColor(i, strip1.Color(255, 255, 0)); //yellow
       strip1.show(); //this sends the updated pixel color to the hardware
     }
   }
-  
+
+  if (!playing[1]) {
+    for (int i = 0; i < N_LEDS; i++) {
+      strip1.setPixelColor(i, strip1.Color(0, 0, 0)); //white
+      strip1.show();
+    }
+  }
+
+  //GREEN 2
   if (playing[2]) {
-    for (int i = 0; i < led_val[2]; i++) {
+    for (int i = N_LEDS; i > led_val[2]; i--) {
+      strip2.setPixelColor(i, strip2.Color(0, 0, 0)); //white
+      strip2.show();
+    }
+    for (int i = 0; i <= led_val[2]; i++) {
       strip2.setPixelColor(i, strip2.Color(0, 150, 0)); //green
       strip2.show(); //this sends the updated pixel color to the hardware
     }
   }
-  
+
+  if (!playing[2]) {
+    for (int i = 0; i < N_LEDS; i++) {
+      strip2.setPixelColor(i, strip2.Color(0, 0, 0)); //white
+      strip2.show();
+    }
+  }
+
+  //BLUE 3
   if (playing[3]) {
-    for (int i = 0; i < led_val[3]; i++) {
-      strip3.setPixelColor(i, strip3.Color(0, 0, 255)); //blue
+    for (int i = N_LEDS; i > led_val[3]; i--) {
+      strip3.setPixelColor(i, strip3.Color(0, 0, 0)); //white
+      strip3.show();
+    }
+    for (int i = 0; i <= led_val[3]; i++) {
+      strip3.setPixelColor(i, strip2.Color(0, 0, 255)); //blue
       strip3.show(); //this sends the updated pixel color to the hardware
+    }
+  }
+
+  if (!playing[3]) {
+    for (int i = 0; i < N_LEDS; i++) {
+      strip3.setPixelColor(i, strip3.Color(0, 0, 0)); //white
+      strip3.show();
     }
   }
 
