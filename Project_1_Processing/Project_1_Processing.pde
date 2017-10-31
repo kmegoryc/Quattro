@@ -86,8 +86,7 @@ void setup() {
   //start every track at the same time
   for (int i = 0; i < 4; i ++) {
     tracks[i].player.loop(100);
-    tracks[i].player.pause();
-    tracks[i].player.rewind();
+    tracks[i].player.mute();
   }
   
 }      
@@ -143,13 +142,13 @@ void draw() {
             
       //if track[i].playing is true, play, otherwise, pause
       if (tracks[i].playing) {
-        tracks[i].player.play();
+        tracks[i].player.unmute();
         //actually change the volume
         tracks[i].player.setGain(tracks[i].volume);
         tracks[i].setLevels(tracks[i].player.left.level(), tracks[i].player.right.level());
       }
       else {
-        tracks[i].player.pause();
+        tracks[i].player.mute();
         tracks[i].player.rewind();
         tracks[i].setLevels(0.0, 0.0);
       } 
